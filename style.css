@@ -1,0 +1,48 @@
+button {
+  background-color: #0c71ff;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 5px;
+  margin: 1px;
+}
+
+button:hover {
+  background-color: #3c8cff;
+}
+
+#console {
+  background-color: black;
+  margin: 30px auto;
+  max-height: 200px;
+  padding: 10px;
+  overflow: auto;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+#console div {
+  color: white;
+  margin-left: 30px;
+  position: relative;
+}
+
+#console div.error {
+  color: red;
+}
+
+#console div.warning {
+  color: yellow;
+}
+
+#console div::before {
+  color: white;
+  content: ">";
+  position: absolute;
+  left: -20px;
+}
