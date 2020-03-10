@@ -1,5 +1,5 @@
 {
-  "name": "api-example-deployment",
+  "name": "api-example-asset-approval",
   "version": "0.0.1",
   "description": "",
   "main": "index.html",
@@ -8,8 +8,8 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
-    "@0xcert/client": "1.0.0-beta",
-    "@0xcert/ethereum-metamask-provider": "2.0.0-beta"
+    "@0xcert/client": "1.0.0",
+    "@0xcert/ethereum-metamask-provider": "2.0.1"
   },
   "devDependencies": {
     "parcel-bundler": "^1.6.1"

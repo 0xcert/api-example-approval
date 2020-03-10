@@ -3,7 +3,7 @@ import {
   buildGatewayConfig,
   NetworkKind
 } from "@0xcert/ethereum-metamask-provider";
-import { Client, Priority, AssetLedgerCapability } from "@0xcert/client";
+import { Client, Priority } from "@0xcert/client";
 import { config } from "./config";
 
 // We create a new instance of metamask provider.
@@ -20,36 +20,43 @@ export async function init() {
 
   config.client = new Client({
     provider,
-    apiUrl: "https://api-staging.0xcert.org"
+    apiUrl: "https://api-rinkeby.0xcert.org"
   });
 
   return config.client.init();
 }
 
-export async function createDeployment() {
-  const deployment = await config.client.createDeployment(
+export async function createValueApproval() {
+  const approval = await config.client.createApproval(
     {
-      name: "Math Course Certificate",
-      symbol: "MCC",
-      uriPrefix: "https://0xcert.org/assets/",
-      uriPostfix: ".json",
-      schemaId:
-        "3f4a0870cd6039e6c987b067b0d28de54efea17449175d7a8cd6ec10ab23cc5d", // base asset schemaId
-      capabilities: [
-        AssetLedgerCapability.TOGGLE_TRANSFERS,
-        AssetLedgerCapability.DESTROY_ASSET,
-        AssetLedgerCapability.REVOKE_ASSET,
-        AssetLedgerCapability.UPDATE_ASSET
-      ],
-      ownerId: config.client.provider.accountId
+      spender: config.assetLedgerId,
+      value: 100
     },
     Priority.LOW
   );
 
-  config.deploymentRef = deployment.data.ref;
-  return deployment;
+  config.valueApprovalRef = approval.data.ref;
+  return approval;
 }
 
-export async function getDeploymentInfo() {
-  return config.client.getDeployment(config.deploymentRef);
+export async function getValueApproveInfo() {
+  return config.client.getApproval(config.valueApprovalRef);
+}
+
+export async function createAssetApproval() {
+  const approval = await config.client.createApproval(
+    {
+      ledgerId: config.assetLedgerId,
+      receiverId: config.operator,
+      approve: true
+    },
+    Priority.LOW
+  );
+
+  config.assetApprovalRef = approval.data.ref;
+  return approval;
+}
+
+export async function getAssetApproveInfo() {
+  return config.client.getApproval(config.assetApprovalRef);
 }
